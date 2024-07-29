@@ -25,6 +25,7 @@ export default function WalletPasswordSetup({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Hello from handlesubmit");
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
