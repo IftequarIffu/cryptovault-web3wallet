@@ -15,34 +15,43 @@ model User {
   email          String    @unique
   password       String
   accounts       Account[]
-  transactions   Transaction[]
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 }
 
 model Account {
-  id             String   @id @default(uuid())
-  userId         String
-  user           User     @relation(fields: [userId], references: [id])
-  name           String
-  address        String   @unique
-  privateKey     String   // Store encrypted private key
-  balance        Float    @default(0)
-  network        String   // 'Ethereum' or 'Solana'
-  derivationPath String   // Store the account derivation path here
-  transactions   Transaction[] // One-to-many relationship
-  createdAt      DateTime @default(now())
+  id            String        @id @default(uuid())
+  userId        String        // Reference to the user who owns the account
+  user          User          @relation(fields: [userId], references: [id])
+  
+  name          String?       // Name for the account (e.g., Staking account, Savings account)
+  publicKey     String        // Public key of the account
+  privateKey    String        // Encrypted private key, stored securely
+  network       String        // Ethereum or Solana
+  balance       Float         // Account balance
+  
+  derivationPath String       // Derivation path for this account
+  transactionsFrom Transaction[] @relation("fromTransactions")
+  transactionsTo   Transaction[] @relation("toTransactions")
+
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
 model Transaction {
-  id          String   @id @default(uuid())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  accountId   String
-  account     Account  @relation(fields: [accountId], references: [id]) // Foreign key to Account
-  amount      Float
-  toAddress   String
-  network     String   // 'Ethereum' or 'Solana'
-  time        DateTime @default(now())
-  explorerUrl String
+  id            String     @id @default(uuid())
+  
+  fromAddress   String     // The address sending the transaction
+  toAddress     String     // The address receiving the transaction
+  amount        Float      // The amount of the transaction
+  timestamp     DateTime   // The time of the transaction
+  txHash        String     // The transaction hash (can be used to track in the explorer)
+  
+  fromAccountId String?
+  fromAccount   Account?   @relation("fromTransactions", fields: [fromAccountId], references: [id])
+
+  toAccountId   String?
+  toAccount     Account?   @relation("toTransactions", fields: [toAccountId], references: [id])
+
+  createdAt     DateTime   @default(now())
 }
