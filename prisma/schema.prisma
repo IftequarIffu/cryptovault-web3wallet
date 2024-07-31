@@ -25,33 +25,12 @@ model Account {
   user          User          @relation(fields: [userId], references: [id])
   
   name          String?       // Name for the account (e.g., Staking account, Savings account)
+  address       String
   publicKey     String        // Public key of the account
-  privateKey    String        // Encrypted private key, stored securely
   network       String        // Ethereum or Solana
-  balance       Float         // Account balance
   
   derivationPath String       // Derivation path for this account
-  transactionsFrom Transaction[] @relation("fromTransactions")
-  transactionsTo   Transaction[] @relation("toTransactions")
 
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
-}
-
-model Transaction {
-  id            String     @id @default(uuid())
-  
-  fromAddress   String     // The address sending the transaction
-  toAddress     String     // The address receiving the transaction
-  amount        Float      // The amount of the transaction
-  timestamp     DateTime   // The time of the transaction
-  txHash        String     // The transaction hash (can be used to track in the explorer)
-  
-  fromAccountId String?
-  fromAccount   Account?   @relation("fromTransactions", fields: [fromAccountId], references: [id])
-
-  toAccountId   String?
-  toAccount     Account?   @relation("toTransactions", fields: [toAccountId], references: [id])
-
-  createdAt     DateTime   @default(now())
 }
