@@ -1,4 +1,4 @@
-import { ClientAccountType } from "@/lib/types";
+import { ClientAccountType, TransactionType } from "@/lib/types";
 
 export const getAccountsOfAUserWallet = (userId: string) => {
   const accounts: ClientAccountType[] = [
@@ -41,4 +41,29 @@ export const getAccountsOfAUserWallet = (userId: string) => {
   ];
 
   return accounts;
+};
+
+export const get3RecentTransactionsOfUserWallet = (userId: string) => {
+  const recentTransactions: TransactionType[] = [
+    {
+      type: "send",
+      amount: "0.1 ETH",
+      to: "0xabcd...efgh",
+      date: "2023-06-01",
+    },
+    {
+      type: "receive",
+      amount: "100 USDC",
+      from: "0xijkl...mnop",
+      date: "2023-05-30",
+    },
+    {
+      type: "swap",
+      amount: "0.5 ETH",
+      to: "10 LINK",
+      date: "2023-05-28",
+    },
+  ];
+
+  return recentTransactions;
 };
