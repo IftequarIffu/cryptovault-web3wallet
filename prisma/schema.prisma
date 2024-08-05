@@ -11,26 +11,28 @@ datasource db {
 }
 
 model User {
-  id             String    @id @default(uuid())
-  email          String    @unique
-  password       String
-  accounts       Account[]
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id                              String    @id @default(uuid())
+  email                           String    @unique
+  password                        String
+  accounts                        Account[]
+  numberOfSolanaAccountsCreated   Int       @default(0)
+  numberOfEthereumAccountsCreated Int       @default(0)
+  createdAt                       DateTime  @default(now())
+  updatedAt                       DateTime  @updatedAt
 }
 
 model Account {
-  id            String        @id @default(uuid())
-  userId        String        // Reference to the user who owns the account
-  user          User          @relation(fields: [userId], references: [id])
-  
-  name          String?       // Name for the account (e.g., Staking account, Savings account)
-  address       String
-  publicKey     String        // Public key of the account
-  network       String        // Ethereum or Solana
-  
-  derivationPath String       // Derivation path for this account
+  id     String @id @default(uuid())
+  userId String // Reference to the user who owns the account
+  user   User   @relation(fields: [userId], references: [id])
 
-  createdAt     DateTime?      @default(now())
-  updatedAt     DateTime?     @updatedAt
+  name      String? // Name for the account (e.g., Staking account, Savings account)
+  address   String
+  publicKey String // Public key of the account
+  network   String // Ethereum or Solana
+
+  derivationPath String // Derivation path for this account
+
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }
