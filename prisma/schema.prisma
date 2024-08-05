@@ -15,8 +15,6 @@ model User {
   email                           String    @unique
   password                        String
   accounts                        Account[]
-  numberOfSolanaAccountsCreated   Int       @default(0)
-  numberOfEthereumAccountsCreated Int       @default(0)
   createdAt                       DateTime  @default(now())
   updatedAt                       DateTime  @updatedAt
 }
