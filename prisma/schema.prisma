@@ -10,19 +10,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id                              String    @id @default(uuid())
-  email                           String    @unique
-  password                        String
-  accounts                        Account[]
-  createdAt                       DateTime  @default(now())
-  updatedAt                       DateTime  @updatedAt
-}
-
 model Account {
   id     String @id @default(uuid())
   userId String // Reference to the user who owns the account
-  user   User   @relation(fields: [userId], references: [id])
 
   name      String? // Name for the account (e.g., Staking account, Savings account)
   address   String
