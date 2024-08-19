@@ -1,28 +1,6 @@
 "use client";
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Send, ChevronLeft, ChevronRight } from "lucide-react";
 import HeaderForCard from "./HeaderForCard";
 import NetworkSelectorDropdown from "./NetworkSelectorDropdown";
 import TotalFunds from "./TotalFunds";
@@ -30,35 +8,10 @@ import { useWallet } from "@/context/WalletContext";
 import SendButton from "./SendButton";
 import { supportedNetworks } from "@/lib/constants";
 import { NetworkType } from "@/lib/types";
-import { Progress } from "@/components/ui/progress";
-import { HistoryModal } from "./HistoryModal";
 import { Badge } from "./ui/badge";
 import SendButtonModal from "./SendButtonModal";
 import { RecentTransactions } from "./RecentTransactions";
 
-type Account = {
-  id: string;
-  address: string;
-  balance: string;
-  name: string;
-  network: string;
-};
-
-type OverviewProps = {
-  currentNetwork: string;
-  setCurrentNetwork: (network: string) => void;
-  currentAccount: Account | undefined;
-  accounts: Account[];
-  networks: {
-    [key: string]: { name: string; symbol: string; color: string };
-  };
-  tokens: Array<{
-    name: string;
-    symbol: string;
-    balance: string;
-    value: string;
-  }>;
-};
 
 export function Overview() {
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
@@ -69,6 +22,7 @@ export function Overview() {
     selectedAccount,
     changeNetwork,
     mnemonic,
+    areValuesDecrypted
   } = useWallet();
   const { isGenericTransferModalOpen, toggleGenericTransferModal } =
     useWallet();
@@ -78,7 +32,9 @@ export function Overview() {
     toAddress: "",
     message: "",
   });
-  // console.log("Mnemonic: ", mnemonic)
+  console.log("Mnemonic in Overview: ", mnemonic)
+  console.log("Accounts in Overview: ", accounts)
+  console.log("AreValuesDecrypted in Overview: ", areValuesDecrypted)
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 3;
 
@@ -120,6 +76,10 @@ export function Overview() {
       <HeaderForCard>Wallet Overview 
         {
           getNetworkInfo(selectedNetwork).type == "testnet" && <Badge className={`ms-[320px]`}>Test Net</Badge>
+        }
+
+        {
+          getNetworkInfo(selectedNetwork).type == "devnet" && <Badge className={`ms-[320px]`}>Dev Net</Badge>
         }
         
         </HeaderForCard>
