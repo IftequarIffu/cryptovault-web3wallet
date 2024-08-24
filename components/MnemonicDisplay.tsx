@@ -1,4 +1,5 @@
-import { useState } from "react";
+"use client";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -19,6 +20,10 @@ import {
 } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Copy, AlertTriangle, ShieldAlert } from "lucide-react";
+import { generateMnemonic } from "bip39";
+import { useUser } from "@clerk/nextjs";
+import { useWallet } from "@/context/WalletContext";
+import { getAccountsFromLocalStorage, getEthAndSolAccountsAfterGenerating, getMnemonicAfterGeneratingIt, getMnemonicFromLocalStorage, updateUnsafeMetaDataOfUserForEthAndSol } from "@/lib/utils";
 
 interface MnemonicDisplayProps {
   onComplete: () => void;
@@ -27,25 +32,33 @@ interface MnemonicDisplayProps {
 export default function MnemonicDisplay({ onComplete }: MnemonicDisplayProps) {
   const [confirmed, setConfirmed] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // In a real application, this would be generated securely and not hardcoded
-  const mnemonicWords = [
-    "apple",
-    "banana",
-    "cherry",
-    "date",
-    "elderberry",
-    "fig",
-    "grape",
-    "honeydew",
-    "imbe",
-    "jackfruit",
-    "kiwi",
-    "lemon",
-  ];
+
+  // Complete this function
+  // let mnemonicWords;
+  // mnemonicWords = [
+  //   "apple",
+  //   "banana",
+  //   "cherry",
+  //   "date",
+  //   "elderberry",
+  //   "fig",
+  //   "grape",
+  //   "honeydew",
+  //   "imbe",
+  //   "jackfruit",
+  //   "kiwi",
+  //   "lemon",
+  // ];
+
+  const { mnemonic, setMnemonicString, accounts, setAllAccounts } = useWallet();
+
+  const { user, isLoaded } = useUser();
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(mnemonicWords.join(" "));
+    navigator.clipboard.writeText(mnemonic);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -55,6 +68,151 @@ export default function MnemonicDisplay({ onComplete }: MnemonicDisplayProps) {
       onComplete();
     }
   };
+
+  // useEffect(() => {
+
+  //   const SetMnemonicUseEffectFunction = async() => {
+  
+  //     if(user?.id) {
+  
+  //       // Mnemonic Functions
+  //       const storedData = JSON.parse(localStorage.getItem(`user_details_${user.id}`) || "{}")
+  //       let generatedMnemonic = '';
+  
+  //       if(!storedData.mnemonic){
+  //         generatedMnemonic = getMnemonicAfterGeneratingIt(user)
+  //         console.log("Mnemonic after generating in MnemonicDisplay: ", generatedMnemonic)
+  
+  //         // encryptStringWithPassword(generatedMnemonic, pass)
+  //         setMnemonicString(generatedMnemonic)
+  //         console.log("Mnemonic string set 1: ", generatedMnemonic)
+
+  //       }
+  //       else{
+  //         const mnemonicFromLocalStorage = getMnemonicFromLocalStorage(user)
+  //         setMnemonicString(mnemonicFromLocalStorage)
+  //         console.log("Mnemonic string set 2: ", mnemonicFromLocalStorage)
+
+  //       }
+        
+  //     }
+  
+  //   }
+
+  //   SetMnemonicUseEffectFunction()
+
+  //   if (isLoaded && mnemonic) {
+  //     console.log("Mnemonic in MnemonicDisplay:", mnemonic);
+  //     setIsLoading(false);
+  //   }
+  // }, [isLoaded, mnemonic]);
+
+
+
+  // useEffect(() => {
+
+  //   const SetAccountsUseEffectFunction = async() => {
+  
+  //     if(user?.id) {
+  
+  //       console.log("Yoo! mnemonic: ", mnemonic)
+
+  //       const storedData = JSON.parse(localStorage.getItem(`user_details_${user.id}`) || "{}")
+  
+  //       // Account Functions
+  //       let generatedAccounts = []
+  //       if(!storedData.accounts || storedData.accounts.length == 0){
+  //         generatedAccounts =  await getEthAndSolAccountsAfterGenerating(user, mnemonic)
+  //         setAllAccounts(generatedAccounts)
+  //         updateUnsafeMetaDataOfUserForEthAndSol(user, 2, 2)
+  //       }
+  //       else{
+  //         const accountsFromLocalStorage = getAccountsFromLocalStorage(user)
+  //         setAllAccounts(accountsFromLocalStorage)
+  //       }
+        
+  //     }
+  
+  //   }
+
+  //   SetAccountsUseEffectFunction()
+
+  //   if (isLoaded && accounts) {
+  //     console.log("Accounts in MnemonicDisplay:", mnemonic);
+  //     setIsLoading(false);
+  //   }
+  // }, [isLoaded, accounts]);
+
+
+
+
+
+
+  // const storeMnemonicToLocalStorage = (encryptedMnemonic: string) => {
+  //   let existingLocalStorageOfLoggedInUser = JSON.parse(
+  //     localStorage.getItem("abcd")
+  //   );
+  //   existingLocalStorageOfLoggedInUser.encryptedMnemonic = encryptedMnemonic;
+  //   localStorage.setItem(
+  //     "abcd",
+  //     JSON.stringify(existingLocalStorageOfLoggedInUser)
+  //   );
+  // };
+
+  // const encrypt = (mnemonic: string) => {
+  //   return mnemonic;
+  // };
+
+  // useEffect(() => {
+  //   // This effect handles the mnemonic encryption and storage
+
+  //   if (!mnemonic) {
+  //     const generatedMnemonic = generateMnemonic();
+  //     setMnemonic(generatedMnemonic);
+  //   }
+  // }, [isLoaded, mnemonic]);
+
+  // useEffect(() => {
+  //   if (isLoaded && !mnemonic) {
+  //     const generatedMnemonic = generateMnemonic();
+  //     console.log("Generating mnemonic after user load:", generatedMnemonic);  // Add log
+  //     setMnemonicString(generatedMnemonic);
+  //     console.log("Mnemonic set: ", mnemonic)
+  //   }
+  // }, [isLoaded, mnemonic, setMnemonicString]);
+  
+
+  // useEffect(() => {
+  //   // const mnemonic = generateRandomMnemonic();
+  //   // setMnemonicState(mnemonic);
+  //   // const encryptedMnemonic = encrypt(mnemonic);
+  //   // storeMnemonicToLocalStorage(encryptedMnemonic);
+
+  //   // const mnemonic = generateMnemonic();
+  //   if (!mnemonic) {
+  //     const generatedMnemonic = generateMnemonic();
+  //     setMnemonic(generatedMnemonic);
+  //     // setMnemonicState(generatedMnemonic);
+  //   }
+  //   // setIsLoading(false);
+  //   // setMnemonic(generateMnemonic());
+  //   // console.log("Generated Mnemonic:", mnemonic);
+  //   // const seed = mnemonicToSeedSync(mnemonic);
+
+  //   // if (isLoaded) {
+  //   //   localStorage.setItem(user?.id as string, JSON.stringify(mnemonic));
+  //   // }
+
+  //   // console.log(seed);
+  // }, []);
+
+  // if (isLoading) {
+  //   return <div>Generating your recovery phrase...</div>;
+  // }
+
+  if (isLoading) {
+    return <div>Loading your recovery phrase...</div>;
+  }
 
   return (
     <Dialog open={true}>
@@ -79,7 +237,7 @@ export default function MnemonicDisplay({ onComplete }: MnemonicDisplayProps) {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-3 gap-2">
-              {mnemonicWords.map((word, index) => (
+              {mnemonic.split(" ").map((word, index) => (
                 <div key={index} className="bg-muted p-2 rounded text-center">
                   <span className="text-muted-foreground mr-2">
                     {index + 1}.
