@@ -1,7 +1,15 @@
-import React from "react";
+import { WalletContextProvider } from "@/context/WalletContext";
+import Navbar from "@/components/Navbar";
+import Container from "@/components/Container";
+import MainContent from "@/components/MainContent";
 
-const Dashboard = () => {
-  return <div>Dashboard</div>;
-};
-
-export default Dashboard;
+export default function Web3Wallet() {
+  return (
+    // <WalletContextProvider>
+      <Container>
+        <Navbar />
+        <MainContent />
+      </Container>
+    // </WalletContextProvider>
+  );
+}
