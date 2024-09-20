@@ -1,13 +1,14 @@
+import prisma from "@/lib/db";
 import { ClientAccountType, TransactionType } from "@/lib/types";
 
 export const getAccountsOfAUserWallet = (userId: string) => {
-  const accounts: ClientAccountType[] = [
+  let accounts: any = [
     {
       id: "account-0",
       userId: "user-123",
       address: "0x1234...5678",
       balance: 1.234,
-      name: "Account 1",
+      name: "Yoyo Account",
       network: "Ethereum",
       publicKey: "abcd",
       derivationPath: "/abcd/1/2/3",
@@ -19,7 +20,7 @@ export const getAccountsOfAUserWallet = (userId: string) => {
       userId: "user-123",
       address: "0x5678...9012",
       balance: 0.567,
-      name: "Account 2",
+      name: "John",
       network: "Ethereum",
       publicKey: "abcd",
       derivationPath: "/abcd/1/2/3",
@@ -31,7 +32,7 @@ export const getAccountsOfAUserWallet = (userId: string) => {
       userId: "user-123",
       address: "0x9012...3456",
       balance: 2.345,
-      name: "Account 3",
+      name: "Walter",
       network: "Solana",
       publicKey: "abcd",
       derivationPath: "/abcd/1/2/3",
@@ -40,6 +41,10 @@ export const getAccountsOfAUserWallet = (userId: string) => {
     },
   ];
 
+  // accounts = await prisma.account.findMany();
+
+  // let local = JSON.parse(localStorage.getItem(`user_details_${userId}`) as string)
+  // console.log("Accounts from getAccountsOfAUserWallet", local)
   return accounts;
 };
 
@@ -66,4 +71,14 @@ export const get3RecentTransactionsOfUserWallet = (userId: string) => {
   ];
 
   return recentTransactions;
+};
+
+export const getTokens = () => {
+  const tokens = [
+    { name: "Ethereum", symbol: "ETH", balance: 1.234, value: 2468.0 },
+    { name: "USD Coin", symbol: "USDC", balance: 100.0, value: 100.0 },
+    { name: "Chainlink", symbol: "LINK", balance: 50.0, value: 750.0 },
+  ];
+
+  return tokens;
 };
