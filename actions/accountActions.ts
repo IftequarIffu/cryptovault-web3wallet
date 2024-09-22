@@ -1,6 +1,4 @@
 import prisma from "@/lib/db";
-import { auth, currentUser } from "@clerk/nextjs/server";
-import { Account as AccountType } from "@prisma/client";
 
 
 export const getTokensOfAnAccount = async (
