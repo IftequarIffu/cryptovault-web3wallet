@@ -6,26 +6,6 @@ import { balanceInEth, balanceInSol, getNetworkInfo, hexToDecimal } from '@/lib/
 import { NetworkType } from '@/lib/types';
 
 
-
-// async function getSolanaBalance(address: string) {
-//     const connection = new Connection(clusterApiUrl('mainnet-beta'));
-
-//   // Convert the address string to a PublicKey object
-//   const publicKey = new PublicKey(address);
-
-//   // Get the balance of the public key (in lamports, the smallest unit of SOL)
-//   const balance = await connection.getBalance(publicKey);
-
-//   // Convert lamports to SOL (1 SOL = 1 billion lamports)
-//   const balanceInSol = await balance / 1e9;
-// //   console.log(`Balance of ${address} is: ${balanceInSol} SOL`);
-
-//   return balanceInSol
-
-  
-// }
-
-
 async function getSolanaBalance(address: string, rpcUrl: string){
 
   try {
@@ -41,7 +21,6 @@ async function getSolanaBalance(address: string, rpcUrl: string){
 
   let config = {
       method: 'post',
-      // maxBodyLength: Infinity,
       url: rpcUrl,
       headers: { 
         'Content-Type': 'application/json'
@@ -85,16 +64,7 @@ let config = {
   data : data
 };
 
-// axios.request(config)
-// .then((response) => {
-//   console.log(JSON.stringify(response.data));
-// })
-// .catch((error) => {
-//   console.log(error);
-// });
-
     const response = await axios.request(config);
-    // console.log("Response: ", response)
     return response.data.result;
 
 }
@@ -115,11 +85,9 @@ export async function getBalanceOfAnAddress(address: string, network: NetworkTyp
       return balanceInEth(balanceInDecimalWei)
     }
     else if(network == "Solana"){
-        // console.log("")
       const balanceInLamports: number = await getSolanaBalance(address, networkInfo.networkRpcUrl)
       console.log("Solana balance in lamports getBalanceOfAnAddress: ", balanceInLamports)
       return balanceInSol(balanceInLamports)
-      // return balance
     }
     else if(network == "ETH Sepolia"){
       const hexBalance = await getEthereumBalance(address, networkInfo.networkRpcUrl)
@@ -127,10 +95,8 @@ export async function getBalanceOfAnAddress(address: string, network: NetworkTyp
       return balanceInEth(balanceInDecimalWei)
     }
     else if(network == "SOL Devnet"){
-      // console.log("")
     const balanceInLamports: number = await getSolanaBalance(address, networkInfo.networkRpcUrl)
     console.log("Solana balance in lamports getBalanceOfAnAddress: ", balanceInLamports)
     return balanceInSol(balanceInLamports)
-    // return balance
   }
 }
