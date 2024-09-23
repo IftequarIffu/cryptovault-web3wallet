@@ -51,14 +51,6 @@ export const getTop3TransactionsFromAllAccounts = async (accountsOfSelectedNetwo
 
       const allTransactionsArrays = await Promise.all(transactionPromises);
 
-    //   allTransactions.forEach((tx: any) => addTransactionToHeap(txsHeap, tx));
-
-        // allTransactionsArrays.forEach((transactions: any[]) => {
-        //     if (transactions) {
-        //         transactions.forEach((tx: any) => addTransactionToHeap(txsHeap, tx));
-        //     }
-        // });
-
     } catch (error: any) {
       console.error(`Error occured while getting ${selectedNetwork} transactions`)
       throw new Error(error.message)
