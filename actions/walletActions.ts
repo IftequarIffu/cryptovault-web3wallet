@@ -40,11 +40,6 @@ export const getAccountsOfAUserWallet = (userId: string) => {
       updatedAt: new Date(),
     },
   ];
-
-  // accounts = await prisma.account.findMany();
-
-  // let local = JSON.parse(localStorage.getItem(`user_details_${userId}`) as string)
-  // console.log("Accounts from getAccountsOfAUserWallet", local)
   return accounts;
 };
 
