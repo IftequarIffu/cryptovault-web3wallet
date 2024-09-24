@@ -12,19 +12,8 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
 
-  // const {isLoaded, user } = useUser()
-  // const router = useRouter()
-
-  // if(isLoaded && user) {
-  //   router.push("/onboarding")
-  // }
 
   return (
-    // <main>
-      
-    //   <UserOnboarding />
-    // </main>
-    // <LandingPage />
     <OAuthSignIn />
   );
 }
