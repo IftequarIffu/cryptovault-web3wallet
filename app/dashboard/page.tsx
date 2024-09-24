@@ -5,11 +5,9 @@ import MainContent from "@/components/MainContent";
 
 export default function Web3Wallet() {
   return (
-    // <WalletContextProvider>
       <Container>
         <Navbar />
         <MainContent />
       </Container>
-    // </WalletContextProvider>
   );
 }
