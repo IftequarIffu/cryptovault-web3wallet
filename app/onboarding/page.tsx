@@ -4,9 +4,7 @@ import { WalletContextProvider } from "@/context/WalletContext";
 
 const Onboarding = () => {
   return (
-    // <WalletContextProvider>
       <UserOnboarding />
-    // </WalletContextProvider>
   );
 };
 
