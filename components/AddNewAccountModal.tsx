@@ -15,8 +15,6 @@ import { Button } from "./ui/button";
 import { DialogHeader, DialogFooter } from "./ui/dialog";
 import { useWallet } from "@/context/WalletContext";
 import { useUser } from "@clerk/nextjs";
-import { generateMnemonic, mnemonicToSeedSync } from "bip39";
-import { HDNodeWallet, Mnemonic } from "ethers";
 import { handleAddNewAccount } from "@/lib/utils";
 import { PasswordModal } from "./PasswordModal";
 
@@ -43,80 +41,6 @@ const AddNewAccountModal = () => {
     network: selectedNetwork,
   });
 
-  const handleAddAccount = () => {
-
-    // if(!areValuesDecrypted){
-    //   setIsPasswordModalOpen(true)
-    // }
-
-    console.log("Mnemonic : ", mnemonic)
-
-    if(mnemonic.startsWith("U2")){
-      setIsPasswordModalOpen(true)
-    }
-
-    if (newAccount.name.trim()) {
-      const newId = `account-${accounts.length}`;
-      setAllAccounts([
-        ...accounts,
-        {
-          id: "1234",
-          userId: "user-123",
-          address: `0x${Math.random()
-            .toString(16)
-            .slice(2, 10)}...${Math.random().toString(16).slice(2, 6)}`,
-          balance: 0,
-          name: newAccount.name.trim(),
-          derivationPath: "/abc",
-          publicKey: "abcd",
-          network: selectedNetwork,
-          createdAt: null,
-          updatedAt: null,
-        },
-      ]);
-      setIsAddingAccount(false);
-      setNewAccount({ name: "", network: selectedNetwork });
-    }
-  };
-
-  const getEthDerivationPath = (totalEthAccounts: number) => {
-    return `m/44'/60'/0'/0/${totalEthAccounts}`;
-  };
-
-  const getSolanaDerivationPath = (totalSolanaAccounts: number) => {
-    return `m/44'/501'/${totalSolanaAccounts}'/0'`;
-  };
-
-  const createEthereumAccount = (
-    mnemonic: string,
-    derivationPath: string
-  ) => {};
-
-  // const handleAddNewAccount = () => {
-  //   console.log("Mnemonic: ", mnemonic);
-  //   const mnemonicObject = Mnemonic.fromPhrase(mnemonic);
-
-  //   const path = getEthDerivationPath(
-  //     user?.unsafeMetadata.totalEthAccounts as number
-  //   );
-  //   console.log(path);
-  //   const hdNodeWallet = HDNodeWallet.fromMnemonic(mnemonicObject, path);
-
-  //   let payload;
-  //   if (isLoaded) {
-  //     payload = {
-  //       userId: user?.id,
-  //       address: hdNodeWallet.address,
-  //       balance: 0,
-  //       name: newAccount.name,
-  //       network: selectedNetwork,
-  //       publicKey: hdNodeWallet.publicKey,
-  //       derivationPath: path,
-  //     };
-  //   }
-
-  //   console.log(payload);
-  // };
 
   return (
     <>
@@ -125,7 +49,6 @@ const AddNewAccountModal = () => {
     onClose={() => setIsPasswordModalOpen(false)}
     onSuccess={() => {
       setIsPasswordModalOpen(false);
-      // handleTransferSubmit();
     }}
     />
     <Dialog open={isAddingAccount} onOpenChange={setIsAddingAccount}>
