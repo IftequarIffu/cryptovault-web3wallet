@@ -154,19 +154,6 @@ const AccountAccordion = ({account}: {account: any}) => {
     }, [toast]);
     
 
-    // useEffect(() => {
-        
-    //     const fetchBalanceData = async(address: string, network: NetworkType) => {
-    //         setBalanceLoading(true)
-    //         const balance = await getBalanceOfAnAddress(address, network)
-    //         console.log(`Balance for address ${address} on network ${network} is : ${balance}`)
-    //         setBalance(balance as number)
-    //         setBalanceLoading(false)
-    //     }
-
-    //     fetchBalanceData(account.address, account.network)
-    // }, [balance])
-
     useEffect(() => {
       fetchBalanceData(account.address, account.network as NetworkType);
     }, [account.address, account.network, fetchBalanceData]);
@@ -255,17 +242,7 @@ const AccountAccordion = ({account}: {account: any}) => {
                 balanceLoading ? <LoadingSpinner /> : balance.toPrecision(1) + " " + getNetworkInfo(account.network as NetworkType)
                 .symbol
               }
-              {/* {
-                balance.toPrecision(5) + " "
-              } */}
-              {/* {
-                getBalanceOfAnAddress(account.address, "Ethereum")
-              } */}
-              {/* {getBalanceOfAnAddress(account.address, account.network as NetworkType)} */}
-              {/* {
-                getNetworkInfo(account.network as NetworkType)
-                  .symbol
-              } */}
+              
             </span>
           </div>
           {/* Balance Section */}
