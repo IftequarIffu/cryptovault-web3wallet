@@ -58,13 +58,6 @@ export function PasswordModal({ isOpen, onClose, onSuccess }: PasswordModalProps
             // alert('Incorrect password');
         }
     }
-
-    // if (decryptSensitiveData(password)) {
-    //   onSuccess();
-    // } else {
-    //   // Show error message
-    //   alert('Incorrect password');
-    // }
   };
 
   return (
