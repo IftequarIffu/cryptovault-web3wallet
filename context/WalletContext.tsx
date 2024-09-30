@@ -133,13 +133,6 @@ export function WalletContextProvider({
     setPassword(password);
   }, []);
 
-  // useEffect(() => {
-  //   if (!mnemonic) {
-  //     const generatedMnemonic = generateMnemonic();
-  //     console.log("Generating mnemonic in context:", generatedMnemonic);
-  //     setMnemonic(generatedMnemonic);
-  //   }
-  // }, []);
 
   const initializeLocalStorageWithMnemonicAndEthAccountAndSolAccount = (newMnemonic: string, accountsArr: any) => {
     localStorage.setItem(`user_details_${user?.id}`, JSON.stringify({
@@ -230,87 +223,6 @@ export function WalletContextProvider({
     });
   }
 
-  // useEffect(() => {
-
-  //   const UseEffectFunction = async() => {
-  //   // if (user?.id) {
-  //   //   setSelectedAccount("Eth Account 1")
-  //   //   // setSelectedAccount("account-0")
-  //   //   let storedData = JSON.parse(localStorage.getItem(`user_details_${user?.id}`) || "{}");
-  //   //   if (storedData.mnemonic) {
-  //   //     console.log("Retrieved stored mnemonic for user:", user.id);
-  //   //     setMnemonic(storedData.mnemonic);
-  //   //     if(storedData.accounts.length != 0){
-
-  //   //       let accountsWithUpdatedBalances:any = []
-  //   //       await storedData.accounts.map(async(item: any) => {
-  //   //       const balance = await getBalanceOfAnAddress(item.address, item.network)
-  //   //       console.log("balance: ", balance)
-  //   //       accountsWithUpdatedBalances.push({...item, balance: balance})
-  //   //     })
-
-        
-  //   //     console.log("Accounts with updated balances", accountsWithUpdatedBalances)
-  //   //     localStorage.setItem(`user_details_${user?.id}`, JSON.stringify({mnemonic: storedData.mnemonic, accounts: accountsWithUpdatedBalances}))
-  //   //     setAccounts(accountsWithUpdatedBalances);
-  //   //     }
-  //   //   } else {
-  //   //     const newMnemonic = generateMnemonic();
-  //   //     console.log("Generating new mnemonic for user:", user.id);
-  //   //     setMnemonic(newMnemonic);
-  //   //     const ethAccountPayload = createEthAccount(0, newMnemonic)
-  //   //     const solAccountPayload = await createSolAccount(0, newMnemonic)
-  //   //     const accountsArr = [ethAccountPayload, solAccountPayload]
-  //   //     // setAccounts(getAccountsOfAUserWallet("abcd"))
-  //   //     try {
-  //   //       await initializeLocalStorageWithMnemonicAndEthAccountAndSolAccount(newMnemonic, accountsArr)
-  //   //       await updateAccountMetaData(user)
-  //   //     } catch (error) {
-  //   //       console.log("Error in Wallet Context UseEffect: ", error)
-          
-  //   //     }
-  //   //   }
-  //   // }
-
-  //   if(user?.id) {
-
-  //     // Mnemonic Functions
-  //     const storedData = JSON.parse(localStorage.getItem(`user_details_${user.id}`) || "{}")
-  //     let generatedMnemonic = '';
-
-  //     if(!storedData.mnemonic){
-  //       generatedMnemonic = getMnemonicAfterGeneratingIt(user)
-  //       console.log("Mnemonic after generating: ", generatedMnemonic)
-
-  //       // encryptStringWithPassword(generatedMnemonic, pass)
-  //       setMnemonicString(generatedMnemonic)
-  //     }
-  //     else{
-  //       const mnemonicFromLocalStorage = getMnemonicFromLocalStorage(user)
-  //       setMnemonicString(mnemonicFromLocalStorage)
-  //     }
-
-
-  //     // Account Functions
-  //     let generatedAccounts = []
-  //     if(!storedData.accounts || storedData.accounts.length == 0){
-  //       generatedAccounts =  await getEthAndSolAccountsAfterGenerating(user, generatedMnemonic)
-  //       setAccounts(generatedAccounts)
-  //       updateUnsafeMetaDataOfUserForEthAndSol(user, 2, 2)
-  //     }
-  //     else{
-  //       const accountsFromLocalStorage = getAccountsFromLocalStorage(user)
-  //       setAccounts(accountsFromLocalStorage)
-  //     }
-
-  //     // Write similar logic for Tokens, NFTs and Recent Tansactions
-      
-  //   }
-
-  // }
-
-  //   UseEffectFunction()
-  // }, [user]);
 
   useEffect(() => {
 
@@ -346,11 +258,6 @@ export function WalletContextProvider({
     }
 
     SetMnemonicUseEffectFunction()
-
-    // if (isLoaded && mnemonic) {
-    //   console.log("Mnemonic in MnemonicDisplay:", mnemonic);
-    //   // setIsLoading(false);
-    // }
   }, [isLoaded]);
 
 
@@ -391,10 +298,6 @@ export function WalletContextProvider({
       SetAccountsUseEffectFunction()
     }
    
-
-    // if (isLoaded && accounts) {
-    //   console.log("Accounts in Wallet Context:", mnemonic);
-    // }
   }, [isLoaded, mnemonic]);
 
 
