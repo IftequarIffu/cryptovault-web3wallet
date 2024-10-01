@@ -37,18 +37,6 @@ export const getTopThreeTxsOfAnEthAddress = async(address: string, etherscanUrl:
         })
     }
 
-    // result.forEach((item: any) => {
-    //     if(txsList.length === 3){
-    //         break;
-    //     }
-    //     txsList.push({
-    //         sender: item.from,
-    //         receiver: item.to,
-    //         amount: convertWeiToEth(parseInt(item.value)),
-    //         txTimestamp: parseInt(item.timeStamp)
-    //     })
-    // })
-
     } catch (error: any) {
         console.error(`Error occured while getting Txs for address: ${address}: `,  error)
         throw new Error(error.message)

@@ -108,10 +108,6 @@ export const getTopThreeTxsOfASolanaAddress = async(address: string, rpcUrl: str
             txsList.push(txInfo)
         }
 
-        // result.forEach(async(item: any) => {
-        //     txInfo = await solanaTxHashSearch(item.signature, rpcUrl)
-        //     txsList.push(txInfo)
-        // })
 
         return txsList
 

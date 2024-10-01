@@ -1,8 +1,3 @@
-// export const RPC_URLS = {
-//     "Ethereum": "http://abcd.com",
-//     "Solana": "http://wxyz.com"
-// }
-
 
 export const LAMPORTS = 9;
 export const ETH_DECIMAL_PLACES = 18;

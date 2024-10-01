@@ -169,14 +169,6 @@ export const generateSolAccount = async(mnemonic: string, totalSolanaAccountsCre
       privateKey = uint8ArrayToHex(new Uint8Array(Object.values(solanaKeypair.secretKey)))
     }
 
-  // const privateKey = new Uint8Array(Object.values(solanaKeypair.secretKey))
-  // console.log("Prv key: ", privateKey)
-
-  // let arr = []
-  // solanaKeypair.secretKey.map(())
-
-  // const name = networkType == "mainnet" ? "Sol Account" : "Sol Devnet Account"
-
   if(name == "Sol Acc" && network == "SOL Devnet") {
     name = "Sol Devnet Acc"
   }
@@ -187,8 +179,6 @@ export const generateSolAccount = async(mnemonic: string, totalSolanaAccountsCre
     name: name,
     address: address,
     publicKey: address,
-    // privateKey: solanaKeypair.secretKey,
-    // privateKey: uint8ArrayToHex(new Uint8Array(Object.values(solanaKeypair.secretKey))),
     privateKey: privateKey,
     network: network,
     derivationPath: derivationPath,
@@ -337,13 +327,6 @@ export const sendEther = async(privateKey: string, amountInEther: string, toAddr
   const finishedTx = await tx.wait()
   console.log(`Tx executed ${finishedTx?.hash}`)
   txHash = finishedTx?.hash as string
-  // } catch (error: any) {
-  //   console.error(`Error occured: ${error.message}`)
-  //   // throw new Error(error.message)
-  // }
-  // finally {
-  //   return txHash
-  // }
 
   return txHash
   
@@ -421,145 +404,6 @@ export const sendSol = async(senderSecretKey: any, recepientPublicKey: string, a
 
 }
 
-
-// export function encrypt(data: any, password: string) {
-//   // If data is a UInt8Array, convert it to a Base64 string
-
-//   console.log("Data type: ", typeof data)
-
-//   if(typeof data === 'object'){
-//     data = new Uint8Array(Object.values(data))
-//   }
-
-//   let dataStr;
-//     if (data instanceof Uint8Array) {
-//         const wordArray = CryptoJS.lib.WordArray.create(data); // Convert Uint8Array to WordArray
-//         dataStr = CryptoJS.enc.Base64.stringify(wordArray); // Convert WordArray to Base64 string
-//     } else if (typeof data === 'string') {
-//         dataStr = data; // Use the string directly
-//     } else {
-//         throw new Error('Invalid data type. Expected a string or Uint8Array.');
-//     }
-
-//     // Encrypt the data
-//     const encrypted = CryptoJS.AES.encrypt(dataStr, password).toString();
-
-//     return encrypted;
-// }
-
-
-// Function to decrypt data
-// export function decrypt(encryptedData: any, password: string) {
-//     // Decrypt the data
-//     const decrypted = CryptoJS.AES.decrypt(encryptedData, password);
-//     const decryptedStr = decrypted.toString(CryptoJS.enc.Utf8);
-
-//     // Try to parse the decrypted string as a Base64 string
-//     try {
-//         const parsedData = CryptoJS.enc.Base64.parse(decryptedStr);
-//         const parsedDataBytes = new Uint8Array(parsedData.words.map(word => [
-//             (word >> 24) & 0xFF,
-//             (word >> 16) & 0xFF,
-//             (word >> 8) & 0xFF,
-//             word & 0xFF
-//         ]).flat());
-
-//         // Check if the length matches the original UInt8Array length (64 bytes for Solana private key)
-//         if (parsedDataBytes.length === 64) {
-//             return parsedDataBytes;
-//         }
-//     } catch (error) {
-//         // If parsing fails, assume the decrypted data is a string
-//         console.error("Decryption failed")
-//     }
-
-//     // Otherwise, return the decrypted string
-//     return decryptedStr;
-// }
-
-
-// export function decrypt(encryptedData: any, password: string) {
-//   // Decrypt the data
-//   const decrypted = CryptoJS.AES.decrypt(encryptedData, password);
-//   const decryptedStr = decrypted.toString(CryptoJS.enc.Utf8);
-
-//   // Log if decryption results in an empty string
-//   if (!decryptedStr) {
-//       console.error("Decryption failed: result is empty");
-//       return null;
-//   }
-
-//   // Try to parse the decrypted string as a Base64 string (for private keys)
-//   try {
-//       const parsedData = CryptoJS.enc.Base64.parse(decryptedStr);
-//       const parsedDataBytes = new Uint8Array(parsedData.words.map(word => [
-//           (word >> 24) & 0xFF,
-//           (word >> 16) & 0xFF,
-//           (word >> 8) & 0xFF,
-//           word & 0xFF
-//       ]).flat());
-
-//       // Check if the length matches the expected length (e.g., 64 bytes for a Solana private key)
-//       if (parsedDataBytes.length === 64) {
-//           console.log("Decryption successful: returning UInt8Array");
-//           return parsedDataBytes;
-//       } else {
-//           console.error("Decryption resulted in incorrect length for private key");
-//       }
-//   } catch (error) {
-//       // If parsing fails, handle it gracefully
-//       console.error("Failed to parse decrypted data as Base64, assuming it's a string:", error);
-//   }
-
-//   // Otherwise, return the decrypted string (e.g., for mnemonic)
-//   console.log("Returning decrypted string");
-//   return decryptedStr;
-// }
-
-// export function decrypt(encryptedData: string, password: string) {
-//   // Decrypt the data using AES
-//   const decrypted = CryptoJS.AES.decrypt(encryptedData, password);
-//   const decryptedStr = decrypted.toString(CryptoJS.enc.Utf8);
-
-//   // Log if decryption results in an empty string
-//   if (!decryptedStr) {
-//     console.error("Decryption failed: result is empty or incorrect password");
-//     return null;
-//   }
-
-//   try {
-//     // Convert the decrypted hex string to the original data (since it's always a hex string)
-//     const parsedHex = new Uint8Array(decryptedStr.match(/.{1,2}/g)?.map(byte => parseInt(byte, 16)) ?? []);
-    
-//     // Log success and return the parsed hex array
-//     console.log("Decryption successful: returning Uint8Array");
-//     return parsedHex;
-//   } catch (error) {
-//     console.error("Failed to parse decrypted data as hex:", error);
-//     return null;
-//   }
-// }
-
-
-// export function encrypt(data: string, password: string) {
-//   // Encrypt the data
-//   const encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(data), password).toString();
-//   return encrypted;
-// }
-
-// export function decrypt(encryptedData: string, password: string) {
-//   // Decrypt the data
-//   const decrypted = CryptoJS.AES.decrypt(encryptedData, password);
-//   const decryptedStr = decrypted.toString(CryptoJS.enc.Utf8);
-  
-//   // Check if decryption resulted in an empty string
-//   if (!decryptedStr) {
-//     console.error("Decryption failed: result is empty");
-//     return null;
-//   }
-
-//   return decryptedStr;
-// }
 
 export const encrypt = (plainText: string, password: string) => {
   try {
