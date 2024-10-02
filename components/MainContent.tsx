@@ -3,16 +3,23 @@ import React, { Suspense, lazy } from "react";
 import { Overview } from "./Overview";
 import { RecentTransactions } from "./RecentTransactions";
 import { AccountsSkeleton } from "./AccountsSkeleton";
+import dynamic from "next/dynamic";
 
-const Accounts = lazy(() => import('@/components/Accounts'));
+// const Accounts = lazy(() => import('@/components/Accounts'));
+
+const Accounts = dynamic(() => import('@/components/Accounts'), {
+  loading: () => <AccountsSkeleton />,
+  ssr: false
+});
 
 const MainContent = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       <Overview />
-      <Suspense fallback={<AccountsSkeleton />}>
+      {/* <Suspense fallback={<AccountsSkeleton />}> */}
         <Accounts />
-      </Suspense>
+      {/* </Suspense> */}
+      {/* <AccountsSkeleton /> */}
       {/* <RecentTransactions /> */}
     </div>
   );
