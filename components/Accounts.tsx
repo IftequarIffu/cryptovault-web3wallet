@@ -51,6 +51,7 @@ import AccountsLoading from "./AccountsLoading";
 import { handleRenameAccountsInLocalStorage } from "@/lib/utils";
 import AccountAccordion from "./AccountAccordion";
 import useSWR from 'swr'
+import { AccountsSkeleton } from "./AccountsSkeleton";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -190,6 +191,7 @@ export default function Accounts() {
           </CardTitle>
         </CardHeader>
         <CardContent>
+          {/* <Suspense fallback={<AccountsSkeleton />}> */}
           <div className="h-[400px] flex flex-col justify-between">
             <Accordion
               type="single"
@@ -199,8 +201,6 @@ export default function Accounts() {
               onValueChange={changeSelectedAccount}
             >
               {paginatedAccounts.map((account) => (
-
-               
                 <AccountAccordion key={account.id} account={account} />
               ))}
             </Accordion>
@@ -232,6 +232,8 @@ export default function Accounts() {
               </div>
             )}
           </div>
+          {/* </Suspense> */}
+          
 
           <AddNewAccountModal />
 
