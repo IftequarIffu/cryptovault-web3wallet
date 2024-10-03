@@ -89,7 +89,7 @@ export function Overview() {
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <NetworkSelectorDropdown />
-            <TotalFunds />
+            <TotalFunds currency={getNetworkInfo(selectedNetwork).symbol} networkType={getNetworkInfo(selectedNetwork).type} selectedNetwork={selectedNetwork}/>
           </div>
 
           {/* Send Button */}
