@@ -152,7 +152,7 @@ export function WalletContextProvider({
   const createEthAccount = (totalEthereumAccountsCreatedByUserSoFar: number, newMnemonic: string, name:string = "Eth Account 1",) => {
     const mnemonicObject = Mnemonic.fromPhrase(newMnemonic);
     const path = getEthDerivationPath(totalEthereumAccountsCreatedByUserSoFar)
-    console.log(path)
+    // console.log(path)
     const hdNodeWallet = HDNodeWallet.fromMnemonic(mnemonicObject, path);
 
     const accountPayload = {
@@ -236,18 +236,18 @@ export function WalletContextProvider({
   
         if(!storedData.mnemonic){
           generatedMnemonic = getMnemonicAfterGeneratingIt(user)
-          console.log("Mnemonic after generating in Wallet Context: ", generatedMnemonic)
+          // console.log("Mnemonic after generating in Wallet Context: ", generatedMnemonic)
   
           // encryptStringWithPassword(generatedMnemonic, pass)
           setMnemonicString(generatedMnemonic)
-          console.log("Mnemonic string set 1: ", generatedMnemonic)
+          // console.log("Mnemonic string set 1: ", generatedMnemonic)
 
         }
         else{
           if(areValuesDecrypted == false) {
             const mnemonicFromLocalStorage = getMnemonicFromLocalStorage(user)
             setMnemonicString(mnemonicFromLocalStorage)
-            console.log("Mnemonic string set 2: ", mnemonicFromLocalStorage)
+            // console.log("Mnemonic string set 2: ", mnemonicFromLocalStorage)
           }
           
 
@@ -268,7 +268,7 @@ export function WalletContextProvider({
   
       if(user?.id && mnemonic) {
   
-        console.log("Yoo! mnemonic: ", mnemonic)
+        // console.log("Yoo! mnemonic: ", mnemonic)
 
         const storedData = JSON.parse(localStorage.getItem(`user_details_${user.id}`) || "{}")
   

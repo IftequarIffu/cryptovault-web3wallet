@@ -29,11 +29,13 @@ async function getSolanaBalance(address: string, rpcUrl: string){
     };
     
   const response = await axios.request(config);
-  console.log("Solana Response: ", response)
+  console.log("Response from getSolanaBalance: ", response)
+  // console.log("Solana Response: ", response)
   return response.data.result.value;
     
   } catch (error: any) {
-    throw new Error(error.message)
+    console.log("Error in getSolanaBalance: ", error)
+    // throw new Error(error.message)
   }
 
     
@@ -73,11 +75,11 @@ let config = {
 
 export async function getBalanceOfAnAddress(address: string, network: NetworkType){
 
-    console.log("I am in getBalanceOfAnAddress")
+    // console.log("I am in getBalanceOfAnAddress")
     const networkInfo = getNetworkInfo(network)
-    console.log("I am in getBalanceOfAnAddress: ", networkInfo)
+    // console.log("I am in getBalanceOfAnAddress: ", networkInfo)
 
-    console.log("Entered getBalanceOfAnAddress", address, network)
+    // console.log("Entered getBalanceOfAnAddress", address, network)
     if(network == "Ethereum") {
      
       const hexBalance = await getEthereumBalance(address, networkInfo.networkRpcUrl)
@@ -86,7 +88,7 @@ export async function getBalanceOfAnAddress(address: string, network: NetworkTyp
     }
     else if(network == "Solana"){
       const balanceInLamports: number = await getSolanaBalance(address, networkInfo.networkRpcUrl)
-      console.log("Solana balance in lamports getBalanceOfAnAddress: ", balanceInLamports)
+      // console.log("Solana balance in lamports getBalanceOfAnAddress: ", balanceInLamports)
       return balanceInSol(balanceInLamports)
     }
     else if(network == "ETH Sepolia"){
@@ -96,7 +98,22 @@ export async function getBalanceOfAnAddress(address: string, network: NetworkTyp
     }
     else if(network == "SOL Devnet"){
     const balanceInLamports: number = await getSolanaBalance(address, networkInfo.networkRpcUrl)
-    console.log("Solana balance in lamports getBalanceOfAnAddress: ", balanceInLamports)
+    // console.log("Solana balance in lamports getBalanceOfAnAddress: ", balanceInLamports)
     return balanceInSol(balanceInLamports)
   }
+}
+
+export async function getSumOfBalancesOfAccounts(accounts: any[], network: NetworkType) {
+
+  let totalBalanceSum = 0;
+
+  for(let account of accounts) {
+    const balance = await getBalanceOfAnAddress(account.address, network);
+    console.log("Balance in Accounts.ForEach: ", balance)
+    if(balance){
+      totalBalanceSum += balance
+    }
+  }
+  console.log("Total Balance Sum in getSumOfBalancesOfAccounts: ", totalBalanceSum)
+  return totalBalanceSum;
 }

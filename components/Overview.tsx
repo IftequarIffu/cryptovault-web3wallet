@@ -33,9 +33,9 @@ export function Overview() {
     toAddress: "",
     message: "",
   });
-  console.log("Mnemonic in Overview: ", mnemonic)
-  console.log("Accounts in Overview: ", accounts)
-  console.log("AreValuesDecrypted in Overview: ", areValuesDecrypted)
+  // console.log("Mnemonic in Overview: ", mnemonic)
+  // console.log("Accounts in Overview: ", accounts)
+  // console.log("AreValuesDecrypted in Overview: ", areValuesDecrypted)
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 3;
 
@@ -59,7 +59,8 @@ export function Overview() {
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <NetworkSelectorDropdown />
-            <TotalFunds currency={getNetworkInfo(selectedNetwork).symbol} networkType={getNetworkInfo(selectedNetwork).type} selectedNetwork={selectedNetwork}/>
+            {/* <TotalFunds currency={getNetworkInfo(selectedNetwork).symbol} networkType={getNetworkInfo(selectedNetwork).type} selectedNetwork={selectedNetwork}/> */}
+            <TotalFunds />
           </div>
 
           <SendButton />

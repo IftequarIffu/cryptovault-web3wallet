@@ -16,8 +16,8 @@ export async function getPricesOfEthAndSolInUSD() {
 
     const prices = response.data;
     
-    console.log(`Ethereum (ETH): $${prices.ethereum.usd}`);
-    console.log(`Solana (SOL): $${prices.solana.usd}`);
+    // console.log(`Ethereum (ETH): $${prices.ethereum.usd}`);
+    // console.log(`Solana (SOL): $${prices.solana.usd}`);
     ethPriceInUSD = prices.ethereum.usd
     solPriceInUSD = prices.solana.usd
   } catch (error) {

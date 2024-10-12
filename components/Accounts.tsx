@@ -95,7 +95,7 @@ export default function Accounts() {
     }
   }, [isRenaming]);
 
-  console.log("Accounts in Accounts.tsx: ", accounts)
+  // console.log("Accounts in Accounts.tsx: ", accounts)
   const filteredAccounts = accounts.filter(
     (account) => account.network === selectedNetwork
   );
