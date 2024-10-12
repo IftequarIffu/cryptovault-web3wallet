@@ -11,6 +11,7 @@ import { NetworkType } from "@/lib/types";
 import { Badge } from "./ui/badge";
 import SendButtonModal from "./SendButtonModal";
 import { RecentTransactions } from "./RecentTransactions";
+import NetworkTypeTag from "./NetworkTypeTag";
 
 
 export function Overview() {
@@ -48,15 +49,10 @@ export function Overview() {
   return (
     <Card className="md:col-span-2">
       <HeaderForCard>Wallet Overview 
-        {
-          getNetworkInfo(selectedNetwork).type == "testnet" && <Badge className={`ms-[320px]`}>Test Net</Badge>
-        }
 
-        {
-          getNetworkInfo(selectedNetwork).type == "devnet" && <Badge className={`ms-[320px]`}>Dev Net</Badge>
-        }
+        <NetworkTypeTag />
         
-        </HeaderForCard>
+      </HeaderForCard>
       
 
       <CardContent>
