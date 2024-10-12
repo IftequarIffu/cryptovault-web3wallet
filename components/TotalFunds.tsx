@@ -87,14 +87,14 @@ const TotalFunds = () => {
     <div className="text-right">
       <p className="text-2xl font-bold">
         {/* {"0"}  */}
-        {parseFloat(totalBalance.toFixed(3)) + " "}
+        {parseFloat(totalBalance.toPrecision(3)) + " "}
         {getNetworkInfo(selectedNetwork).symbol}
       </p>
       <p className="text-sm text-gray-500">
 
         {
-          getNetworkInfo(selectedNetwork).type == "mainnet" ? "0 USD" 
-          : 
+          // getNetworkInfo(selectedNetwork).type == "mainnet" ? "0 USD" 
+          // : 
           // "3 USD"
           
           `${parseFloat(totalBalanceInUSD.toFixed(3))} USD`

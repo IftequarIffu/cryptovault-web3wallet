@@ -239,7 +239,7 @@ const AccountAccordion = ({account}: {account: any}) => {
             <span className="text-sm">
               {/* {account.balance}{" "} */}
               {
-                balanceLoading ? <LoadingSpinner /> : balance.toPrecision(1) + " " + getNetworkInfo(account.network as NetworkType)
+                balanceLoading ? <LoadingSpinner /> : parseFloat(balance.toPrecision(3)) + " " + getNetworkInfo(account.network as NetworkType)
                 .symbol
               }
               
