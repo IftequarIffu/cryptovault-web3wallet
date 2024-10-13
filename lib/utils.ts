@@ -505,13 +505,24 @@ export const decryptLocalStorage = (password: string, mnemonic: string, accounts
 }
 
 export const convertTimestampToDate = (timestamp: number) => {
-  const date = new Date(timestamp);
+  const date = new Date(timestamp * 1000);
 
   // Format the date into a readable string
   const formattedDate = date.toLocaleDateString(); // e.g., '4/13/2023'
 
   // Optional: Format with time as well
-  const formattedDateTime = date.toLocaleString();
+  // const formattedDateTime = date.toLocaleString();
+
+  const formattedDateTime = date.toLocaleString("en-US", {
+    timeZone: "UTC", // Adjust for UTC
+    hour12: false,   // 24-hour format
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  });
 
   return formattedDateTime
 }
