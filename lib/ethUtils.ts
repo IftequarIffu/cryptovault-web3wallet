@@ -1,12 +1,12 @@
 import { Currency } from "lucide-react";
-import { ETH_DECIMAL_PLACES, ETHERSCAN_API_KEY, SEPOLIA_ETHERSCAN_URL } from "./constants";
+import { ETH_DECIMAL_PLACES, ETHERSCAN_API_KEY } from "./constants";
 
 export const convertWeiToEth = (wei: number) => {
     return wei/(10**ETH_DECIMAL_PLACES);
 }
 
 
-export const getTopThreeTxsOfAnEthAddress = async(address: string, etherscanUrl: string, apiKey: string = ETHERSCAN_API_KEY) => {
+export const getTopThreeTxsOfAnEthAddress = async(address: string, etherscanApiUrl: string, etherscanExplorerUrl: string, apiKey: string = ETHERSCAN_API_KEY) => {
     
     console.log(`API Key: ${apiKey}`)
     let txsList: any[] = []
@@ -16,7 +16,7 @@ export const getTopThreeTxsOfAnEthAddress = async(address: string, etherscanUrl:
     let config = {
     method: 'get',
     maxBodyLength: Infinity,
-    url: `${etherscanUrl}/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${apiKey}`,
+    url: `${etherscanApiUrl}/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${apiKey}`,
     headers: { }
     };
 
@@ -33,10 +33,12 @@ export const getTopThreeTxsOfAnEthAddress = async(address: string, etherscanUrl:
         txsList.push({
             sender: item.from,
             receiver: item.to,
+            hash: item.hash,
             amount: convertWeiToEth(parseInt(item.value)),
             txTimestamp: parseInt(item.timeStamp),
             txType: address == item.from ? "send" : "receive",
-            currency: "ETH"
+            currency: etherscanExplorerUrl.includes('sepolia') ? 'SepoliaETH' : 'ETH',
+            txUrl: `${etherscanExplorerUrl}/tx/${item.hash}`
         })
     }
 

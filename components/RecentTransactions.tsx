@@ -12,12 +12,13 @@ import { ReactNode, useCallback, useEffect, useState } from "react";
 import { NetworkType } from "@/lib/types";
 import { getTopThreeTxsOfASolanaAddress } from "@/lib/solanaUtils";
 import { getTopThreeTxsOfAnEthAddress } from "@/lib/ethUtils";
-import { ETHEREUM_SEPOLIA_RPC_URL, MAINNET_ETHERSCAN_URL, SEPOLIA_ETHERSCAN_URL, SOLANA_DEVNET_EXPLORER_RPC_URL, SOLANA_MAINNET_EXPLORER_RPC_URL } from "@/lib/constants";
+import { ETHEREUM_SEPOLIA_RPC_URL, SOLANA_DEVNET_EXPLORER_RPC_URL, SOLANA_MAINNET_EXPLORER_RPC_URL } from "@/lib/constants";
 import { toast } from "@/hooks/use-toast";
 import { getTop3TransactionsFromAllAccounts } from "@/actions/transactionActions";
 import { supportedNetworks } from "@/lib/constants";
 import { convertTimestampToDate } from "@/lib/utils";
 import { LoadingSpinner } from "./LoadingSpinner";
+import Link from "next/link";
 
 
 export function RecentTransactions() {
@@ -100,13 +101,17 @@ export function RecentTransactions() {
                       ? `From: ${tx.sender.slice(0,25)}...`
                       : `To: ${tx.receiver.slice(0,25)}...`}
                   </p>
+                  {/* <p>{tx.txUrl}</p> */}
                 </div>
               </div>
               <div className="text-right">
                 <p className="text-sm text-gray-500">{convertTimestampToDate(tx.txTimestamp)}</p>
+                
+                <Link href={tx.txUrl}>
                 <Button variant="ghost" size="sm">
-                  <ExternalLink className="h-4 w-4 mr-1" /> View
+                  <ExternalLink className="h-4 w-4 mr-1" /> View 
                 </Button>
+                </Link>
               </div>
             </div>
           ))}

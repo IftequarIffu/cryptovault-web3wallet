@@ -9,13 +9,14 @@ export const convertLamportsToSol = (lamports: number) => {
 }
 
 
-export const solanaTxHashSearch = async(txSignature: string, rpcUrl: string, address: string) => {
+export const solanaTxHashSearch = async(txSignature: string, rpcUrl: string, address: string, explorerUrl: string, networkType: string) => {
 
     let sender = '';
     let receiver = '';
     let amount = 0;
     let txTimestamp = 0;
     let txType = '';
+    let txUrl = '';
 
     try {
         
@@ -47,6 +48,10 @@ export const solanaTxHashSearch = async(txSignature: string, rpcUrl: string, add
             // console.log(`For ${txSignature}, the response data is ${response.data}`)
             const result = response.data.result
             console.log(`For ${txSignature}, the result is ${result}`)
+            txUrl = `${explorerUrl}/tx/${txSignature}`
+            if(networkType == "devnet") {
+                txUrl = txUrl + "?cluster=devnet"
+            }
             txTimestamp = result.blockTime
             const instructions = response.data.result.transaction.message.instructions
             instructions.forEach((instruction: any) => {
@@ -55,7 +60,7 @@ export const solanaTxHashSearch = async(txSignature: string, rpcUrl: string, add
                     receiver = instruction.parsed.info.destination
                     amount = convertLamportsToSol(instruction.parsed.info.lamports)
                     txType = sender == address ? "send" : "receive"
-
+                    
                 }
             });
     } catch (error: any) {
@@ -69,13 +74,15 @@ export const solanaTxHashSearch = async(txSignature: string, rpcUrl: string, add
             amount: amount,
             txTimestamp: txTimestamp,
             txType: txType,
-            currency: "SOL"
+            currency: "SOL",
+            hash: txSignature,
+            txUrl: txUrl
         }
     }
 }
 
 
-export const getTopThreeTxsOfASolanaAddress = async(address: string, rpcUrl: string) => {
+export const getTopThreeTxsOfASolanaAddress = async(address: string, rpcUrl: string, explorerUrl: string, networkType: string) => {
 
     let txsList: any[] = []
     try {
@@ -111,7 +118,7 @@ export const getTopThreeTxsOfASolanaAddress = async(address: string, rpcUrl: str
             if(txsList.length == 3) {
                 break;
             }
-            txInfo = await solanaTxHashSearch(item.signature, rpcUrl, address)
+            txInfo = await solanaTxHashSearch(item.signature, rpcUrl, address, explorerUrl, networkType)
             txsList.push(txInfo)
         }
 
