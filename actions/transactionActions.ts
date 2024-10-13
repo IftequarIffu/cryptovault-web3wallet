@@ -9,47 +9,45 @@ export const getTop3TransactionsFromAllAccounts = async (accountsOfSelectedNetwo
     console.log(`Accounts: ${accountsOfSelectedNetwork}, selectedNetwork: ${selectedNetwork}`)
     let txsHeap: any[] = []
     const addTransactionToHeap = (heap: any[], newTx: any) => {
-      heap.push(newTx);
-      // If the heap exceeds 3 transactions, remove the one with the smallest timestamp
+
+      const isDuplicate = heap.some(tx => tx.txTimestamp === newTx.txTimestamp && tx.sender === newTx.sender);
+      if (!isDuplicate) {
+        heap.push(newTx);
+      }
+      
       if (heap.length > 3) {
         heap.sort((a, b) => a.txTimestamp - b.txTimestamp);
         heap.shift(); // Remove the oldest transaction
       }
     };
 
-    let allTransactions: any[] = [];
 
     try {
+        let txs: any[];
         const transactionPromises = accountsOfSelectedNetwork.map(async (account: any) => {
         if(selectedNetwork == "ETH Sepolia") {
-          let txs = await getTopThreeTxsOfAnEthAddress(account.address, SEPOLIA_ETHERSCAN_URL)
-          txs.map((tx: any) => {
-            allTransactions.push(tx)
-
-          })
+          txs = await getTopThreeTxsOfAnEthAddress(account.address, SEPOLIA_ETHERSCAN_URL)
         }
         else if (selectedNetwork == "Ethereum") {
-          let txs = await getTopThreeTxsOfAnEthAddress(account.address, MAINNET_ETHERSCAN_URL)
-          txs.map((tx: any) => {
-            allTransactions.push(tx)
-          })
+          txs = await getTopThreeTxsOfAnEthAddress(account.address, MAINNET_ETHERSCAN_URL)
         }
         else if (selectedNetwork == "Solana") {
-          let txs = await getTopThreeTxsOfASolanaAddress(account.address, SOLANA_MAINNET_EXPLORER_RPC_URL)
-          txs.map((tx: any) => {
-            allTransactions.push(tx)
-          })
+          txs = await getTopThreeTxsOfASolanaAddress(account.address, SOLANA_MAINNET_EXPLORER_RPC_URL)
         }
         else if (selectedNetwork == "SOL Devnet") {
-          let txs = await getTopThreeTxsOfASolanaAddress(account.address, SOLANA_DEVNET_EXPLORER_RPC_URL)
-          console.log(`SOL Devnet Txs: ${txs}`)
-          txs.map((tx: any) => {
-            allTransactions.push(tx)
-          })
+          txs = await getTopThreeTxsOfASolanaAddress(account.address, SOLANA_DEVNET_EXPLORER_RPC_URL)
         }
+
+        txs.forEach((tx: any) => {
+          console.log("Adding transaction to heap: ", tx);
+          addTransactionToHeap(txsHeap, tx);
+        });
+
       })
 
-      const allTransactionsArrays = await Promise.all(transactionPromises);
+      await Promise.all(transactionPromises);
+
+      console.log("Heap after fetching transactions: ", txsHeap);
 
     } catch (error: any) {
       console.error(`Error occured while getting ${selectedNetwork} transactions`)

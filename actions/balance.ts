@@ -29,12 +29,12 @@ async function getSolanaBalance(address: string, rpcUrl: string){
     };
     
   const response = await axios.request(config);
-  console.log("Response from getSolanaBalance: ", response)
+  // console.log("Response from getSolanaBalance: ", response)
   // console.log("Solana Response: ", response)
   return response.data.result.value;
     
   } catch (error: any) {
-    console.log("Error in getSolanaBalance: ", error)
+    // console.log("Error in getSolanaBalance: ", error)
     // throw new Error(error.message)
   }
 
@@ -109,11 +109,11 @@ export async function getSumOfBalancesOfAccounts(accounts: any[], network: Netwo
 
   for(let account of accounts) {
     const balance = await getBalanceOfAnAddress(account.address, network);
-    console.log("Balance in Accounts.ForEach: ", balance)
+    // console.log("Balance in Accounts.ForEach: ", balance)
     if(balance){
       totalBalanceSum += balance
     }
   }
-  console.log("Total Balance Sum in getSumOfBalancesOfAccounts: ", totalBalanceSum)
+  // console.log("Total Balance Sum in getSumOfBalancesOfAccounts: ", totalBalanceSum)
   return totalBalanceSum;
 }

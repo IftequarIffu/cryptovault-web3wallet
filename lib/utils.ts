@@ -503,3 +503,15 @@ export const decryptLocalStorage = (password: string, mnemonic: string, accounts
   return [decryptedMnemonic, decryptedAccounts]
 
 }
+
+export const convertTimestampToDate = (timestamp: number) => {
+  const date = new Date(timestamp);
+
+  // Format the date into a readable string
+  const formattedDate = date.toLocaleDateString(); // e.g., '4/13/2023'
+
+  // Optional: Format with time as well
+  const formattedDateTime = date.toLocaleString();
+
+  return formattedDateTime
+}

@@ -9,12 +9,13 @@ export const convertLamportsToSol = (lamports: number) => {
 }
 
 
-export const solanaTxHashSearch = async(txSignature: string, rpcUrl: string) => {
+export const solanaTxHashSearch = async(txSignature: string, rpcUrl: string, address: string) => {
 
     let sender = '';
     let receiver = '';
     let amount = 0;
     let txTimestamp = 0;
+    let txType = '';
 
     try {
         
@@ -43,14 +44,17 @@ export const solanaTxHashSearch = async(txSignature: string, rpcUrl: string) => 
             };
         
             const response = await axios.request(config)
-            const result = response.result
+            // console.log(`For ${txSignature}, the response data is ${response.data}`)
+            const result = response.data.result
+            console.log(`For ${txSignature}, the result is ${result}`)
             txTimestamp = result.blockTime
-            const instructions = response.result.transaction.message.instructions
+            const instructions = response.data.result.transaction.message.instructions
             instructions.forEach((instruction: any) => {
                 if(instruction.parsed != null) {
                     sender = instruction.parsed.info.source
                     receiver = instruction.parsed.info.destination
                     amount = convertLamportsToSol(instruction.parsed.info.lamports)
+                    txType = sender == address ? "send" : "receive"
 
                 }
             });
@@ -63,7 +67,9 @@ export const solanaTxHashSearch = async(txSignature: string, rpcUrl: string) => 
             sender: sender,
             receiver: receiver,
             amount: amount,
-            txTimestamp: txTimestamp
+            txTimestamp: txTimestamp,
+            txType: txType,
+            currency: "SOL"
         }
     }
 }
@@ -96,15 +102,16 @@ export const getTopThreeTxsOfASolanaAddress = async(address: string, rpcUrl: str
         };
 
         const response = await axios.request(config)
-        const result = response.result
-        
+        const result = response.data.result
+        // console.log("Response: ", response)
+        // console.log("Result: ", result)
         let txInfo;
 
         for(let item of result) {
             if(txsList.length == 3) {
                 break;
             }
-            txInfo = await solanaTxHashSearch(item.signature, rpcUrl)
+            txInfo = await solanaTxHashSearch(item.signature, rpcUrl, address)
             txsList.push(txInfo)
         }
 

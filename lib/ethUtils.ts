@@ -1,3 +1,4 @@
+import { Currency } from "lucide-react";
 import { ETH_DECIMAL_PLACES, ETHERSCAN_API_KEY, SEPOLIA_ETHERSCAN_URL } from "./constants";
 
 export const convertWeiToEth = (wei: number) => {
@@ -21,7 +22,7 @@ export const getTopThreeTxsOfAnEthAddress = async(address: string, etherscanUrl:
 
     const response = await axios.request(config)
     console.log("response: ", response)
-    const result = response.result
+    const result = response.data.result
     console.log("result: ", result)
 
 
@@ -33,7 +34,9 @@ export const getTopThreeTxsOfAnEthAddress = async(address: string, etherscanUrl:
             sender: item.from,
             receiver: item.to,
             amount: convertWeiToEth(parseInt(item.value)),
-            txTimestamp: parseInt(item.timeStamp)
+            txTimestamp: parseInt(item.timeStamp),
+            txType: address == item.from ? "send" : "receive",
+            currency: "ETH"
         })
     }
 

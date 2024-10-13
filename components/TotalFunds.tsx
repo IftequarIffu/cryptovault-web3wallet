@@ -22,7 +22,7 @@ const TotalFunds = () => {
   } = useWallet();
 
   const selectedNetworkAccounts = accounts.filter((account) => account.network == selectedNetwork)
-  console.log("SelectedNetworkAccounts: ", selectedNetworkAccounts)
+  // console.log("SelectedNetworkAccounts: ", selectedNetworkAccounts)
 
 
 
@@ -31,7 +31,7 @@ const TotalFunds = () => {
 
     const getTotalBalance = async(selectedNetworkAccounts: any[], selectedNetwork: NetworkType) => {
       const totalBalance = await getSumOfBalancesOfAccounts(selectedNetworkAccounts, selectedNetwork)
-      console.log("Total Balance: ", totalBalance)
+      // console.log("Total Balance: ", totalBalance)
       if (!currencyPrices) {
         const currencyPrices = await getPricesOfEthAndSolInUSD()
         setCurrencyPrices(currencyPrices); // Store prices in state

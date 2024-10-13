@@ -111,7 +111,7 @@ const AccountAccordion = ({account}: {account: any}) => {
       };
 
       const handleStartRenaming = (accountId: string, currentName: string) => {
-        console.log("In HandleStart Renaming")
+        // console.log("In HandleStart Renaming")
         setIsRenaming(accountId);
         setNewAccountName(currentName);
       };
@@ -139,10 +139,10 @@ const AccountAccordion = ({account}: {account: any}) => {
       setBalanceLoading(true);
       try {
         const balance = await getBalanceOfAnAddress(address, network);
-        console.log(`Balance for address ${address} on network ${network} is : ${balance}`);
+        // console.log(`Balance for address ${address} on network ${network} is : ${balance}`);
         setBalance(balance as number);
       } catch (error) {
-        console.error("Error fetching balance:", error);
+        // console.error("Error fetching balance:", error);
         toast({
           title: "Error",
           description: "Failed to fetch balance. Please try again later.",
