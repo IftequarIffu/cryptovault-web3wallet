@@ -26,6 +26,8 @@ import { useUser } from '@clerk/nextjs';
 import { supportedNetworks } from "@/lib/constants";
 import { useToast } from "@/hooks/use-toast";
 import { LoadingSpinner } from './LoadingSpinner';
+import SendButtonModal from './SendButtonModal';
+import SendButton from './SendButton';
 
 
 
@@ -160,6 +162,7 @@ const AccountAccordion = ({account}: {account: any}) => {
 
 
   return (
+    <>
     <AccordionItem key={account.id} value={account.id}>
       <AccordionTrigger className="hover:no-underline">
         <div className="flex items-center justify-between w-full">
@@ -248,16 +251,19 @@ const AccountAccordion = ({account}: {account: any}) => {
           {/* Balance Section */}
 
           {/* Transfer Button */}
-          <Button
+          {/* <Button
             className="w-full mt-2"
             onClick={() => handleOpenTransferModal(account.id)}
           >
             <Send className="mr-2 h-4 w-4" /> Transfer
-          </Button>
+          </Button> */}
+          {/* <SendButton /> */}
           {/* Transfer Button */}
         </div>
       </AccordionContent>
     </AccordionItem>
+    {/* <SendButtonModal filteredAccounts={[account]} /> */}
+    </>
   )
 }
 
