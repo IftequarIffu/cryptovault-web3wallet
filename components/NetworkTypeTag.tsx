@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { useWallet } from '@/context/WalletContext';
 import { NetworkType } from '@/lib/types';

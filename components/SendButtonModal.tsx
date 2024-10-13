@@ -15,7 +15,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "@/hooks/use-toast";
 import { PasswordModal } from "./PasswordModal";
 
-const SendButtonModal = ({ filteredAccounts }: { filteredAccounts: any }) => {
+const SendButtonModal = () => {
+
+
   const { isGenericTransferModalOpen, toggleGenericTransferModal, accounts, selectedNetwork, areValuesDecrypted, mnemonic } = useWallet();
   const [transferDetails, setTransferDetails] = useState({
     fromAccount: "",
@@ -24,6 +26,10 @@ const SendButtonModal = ({ filteredAccounts }: { filteredAccounts: any }) => {
     message: "",
   });
   const [transactionState, setTransactionState] = useState<"idle" | "processing" | "success" | "error">("idle");
+
+  const filteredAccounts = accounts.filter(
+    (account) => account.network === selectedNetwork
+  );
 
   const [error, setError] = useState('')
   const [transactionHash, setTransactionHash] = useState('')
